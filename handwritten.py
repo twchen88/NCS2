@@ -14,18 +14,6 @@ net.setPreferableBackend(cv2.dnn.DNN_BACKEND_INFERENCE_ENGINE)
 net.setPreferableTarget(cv2.dnn.DNN_TARGET_MYRIAD)
 
 
-print("should print 2, if works move on")
-img = plt.imread("test_image.jpg")
-img = img[:, :, 1]
-img = cv2.resize(img, (1, 28 * 28))
-
-
-net.setInput(img)
-out = net.forward()
-print(np.argmax(out, axis=1))
-
-
-
 vid = cv2.VideoCapture(0)
 
 while True:

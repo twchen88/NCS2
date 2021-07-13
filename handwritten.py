@@ -2,9 +2,6 @@ import cv2
 import tensorflow as tf
 from tensorflow import keras
 import numpy as np
-import matplotlib
-import matplotlib.pyplot as plt
-from openvino.inference_engine import IENetwork, IECore
 
 model_path = "converted_model/saved_model.xml"
 arch_path = "converted_model/saved_model.bin"
@@ -20,7 +17,8 @@ while True:
     ret, frame = vid.read()
 
     dat = frame[:, :, 1]
-    dat = cv2.resize(dat, (1, 28 * 28))
+    dat = cv2.resize(dat, (28, 28))
+    dat = dat.reshape(1, 784)
 
     net.setInput(dat)
     out = net.forward()

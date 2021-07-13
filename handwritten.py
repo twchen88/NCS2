@@ -6,8 +6,8 @@ import matplotlib
 import matplotlib.pyplot as plt
 from openvino.inference_engine import IENetwork, IECore
 
-model_path = "saved_model.xml"
-arch_path = "saved_model.bin"
+model_path = "converted_model/saved_model.xml"
+arch_path = "converted_model/saved_model.bin"
 
 net = cv2.dnn.readNet(arch_path, model_path)
 net.setPreferableBackend(cv2.dnn.DNN_BACKEND_INFERENCE_ENGINE)

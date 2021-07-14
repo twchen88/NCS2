@@ -12,10 +12,11 @@ net.setPreferableBackend(cv2.dnn.DNN_BACKEND_INFERENCE_ENGINE)
 net.setPreferableTarget(cv2.dnn.DNN_TARGET_MYRIAD)
 
 path_to_images = "gpu_test/notebooks/"
-img = plt.imread(path_to_images + "9.jpg")
+img = plt.imread(path_to_images + "3.jpg")
 img = img[:, :, 0]
 img = cv2.resize(img, (28, 28))
 img = img.reshape(1, 28 * 28)/255
+img = img.astype("float32")
 
 net.setInput(img)
 out = net.forward()

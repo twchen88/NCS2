@@ -2,6 +2,7 @@ import cv2
 import tensorflow as tf
 from tensorflow import keras
 import numpy as np
+import matplotlib.pyplot as plt
 
 model_path = "converted_model/saved_model.xml"
 arch_path = "converted_model/saved_model.bin"
@@ -10,30 +11,39 @@ net = cv2.dnn.readNet(arch_path, model_path)
 net.setPreferableBackend(cv2.dnn.DNN_BACKEND_INFERENCE_ENGINE)
 net.setPreferableTarget(cv2.dnn.DNN_TARGET_MYRIAD)
 
+path_to_images = "gpu_test/notebooks/"
+img = plt.imread(path_to_images + "9.jpg")
+img = img[:, :, 0]
+img = cv2.resize(img, (28, 28))
+img = img.reshape(1, 28 * 28)/255
 
-vid = cv2.VideoCapture(0)
+net.setInput(img)
+out = net.forward()
+print(np.argmax(out, axis = 1))
 
-while True:
-    ret, frame = vid.read()
+# vid = cv2.VideoCapture(0)
 
-    dat = frame[:, :, 1]
-    dat = cv2.resize(dat, (28, 28))
-    dat = dat.reshape(1, 784)
+# while True:
+#     ret, frame = vid.read()
 
-    net.setInput(dat)
-    out = net.forward()
+#     dat = frame[:, :, 1]
+#     dat = cv2.resize(dat, (28, 28))
+#     dat = dat.reshape(1, 784)
+
+#     net.setInput(dat)
+#     out = net.forward()
     
-    num = np.argmax(out, axis = 1)
-    print(num)
+#     num = np.argmax(out, axis = 1)
+#     print(num)
     
-    cv2.imshow('Input', frame)
+#     cv2.imshow('Input', frame)
 
-    # Press "ESC" key to stop webcam
-    if cv2.waitKey(1) == 27:
-        break
+#     # Press "ESC" key to stop webcam
+#     if cv2.waitKey(1) == 27:
+#         break
 
 
-# Release video capture object and close the window
-vid.release()
-cv2.destroyAllWindows()
-cv2.waitKey(1)
+# # Release video capture object and close the window
+# vid.release()
+# cv2.destroyAllWindows()
+# cv2.waitKey(1)

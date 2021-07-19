@@ -1,9 +1,7 @@
 import cv2
-import tensorflow as tf
 from tensorflow import keras
 import numpy as np
-import matplotlib.pyplot as plt
-from tensorflow import keras
+
 
 # load dataset
 (x_train, y_train), (x_test, y_test) = keras.datasets.mnist.load_data()
@@ -22,14 +20,14 @@ labels = y_train
 correct = 0
 
 # test all of them
-for i in range(100):
+for i in range(10000):
     img = images[i]
     net.setInput(img)
     out = net.forward()
     if np.argmax(out, axis = 1) == labels[i]:
         correct += 1
 
-print(correct)
+print(correct/10000)
 # path_to_images = "gpu_test/notebooks/"
 # img = plt.imread(path_to_images + "6.jpg")
 # img = img[:, :, 0]
